@@ -1,0 +1,11 @@
+{
+  "name": "telegram-gateway",
+  "version": "1.0.0",
+  "repository": "git@github.com:xN8Tx/telegram-gateway.git",
+  "author": "xN8Tx <theedlern8t@ya.ru>",
+  "scripts": {
+    "dev": "docker compose -f ./configs/dev/docker-compose.yaml up --build -d",
+    "start": "docker compose -f ./configs/prod/docker-compose.yaml up --build -d"
+  },
+  "license": "MIT"
+}

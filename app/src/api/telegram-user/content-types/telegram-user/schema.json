@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "telegram_users",
+  "info": {
+    "singularName": "telegram-user",
+    "pluralName": "telegram-users",
+    "displayName": "Telegram User"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "userId": {
+      "type": "string",
+      "private": true,
+      "required": true,
+      "unique": true
+    },
+    "tokens": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::token.token",
+      "inversedBy": "telegram_users"
+    }
+  }
+}
