@@ -1,0 +1,48 @@
+{
+  "name": "telegram-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "strapi build",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "5.33.0",
+    "@strapi/plugin-users-permissions": "5.33.0",
+    "@strapi/strapi": "5.33.0",
+    "@types/handlebars": "^4.1.0",
+    "better-sqlite3": "^12.5.0",
+    "grammy": "^1.38.4",
+    "handlebars": "^4.7.8",
+    "monaco-editor": "^0.55.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "strapi-code-editor-custom-field": "^1.1.0",
+    "styled-components": "^6.0.0",
+    "zod": "^4.2.1",
+    "vite-plugin-monaco-editor": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.0.0 <=24.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "ec698b59-fce0-4002-a572-eee68e9e7ae6",
+    "installId": "4c8abf3330cad46edc7df0e5d565ced8370de7260cc857857a96973c1709a8b7"
+  }
+}

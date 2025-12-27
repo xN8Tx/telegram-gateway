@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tokens",
+  "info": {
+    "singularName": "token",
+    "pluralName": "tokens",
+    "displayName": "Token"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "token": {
+      "type": "text",
+      "private": true,
+      "unique": true
+    },
+    "templates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::template.template"
+    },
+    "telegram_users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::telegram-user.telegram-user",
+      "mappedBy": "tokens"
+    }
+  }
+}
