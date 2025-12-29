@@ -2,14 +2,20 @@ import { Core } from "@strapi/strapi";
 import { z } from "zod";
 
 /** Поддерживаемые типы полей, приходящие из шаблона */
-type FieldType = "string" | "number" | "stringArray" | "numberArray";
+type FieldType =
+  | "string"
+  | "number"
+  | "stringArray"
+  | "numberArray"
+  | "boolean";
 
 /** Базовые Zod-схемы для одного поля */
 type BaseFieldSchema =
   | z.ZodString
   | z.ZodNumber
   | z.ZodArray<z.ZodString>
-  | z.ZodArray<z.ZodNumber>;
+  | z.ZodArray<z.ZodNumber>
+  | z.ZodBoolean;
 
 /** Схема поля с возможной optional-оберткой */
 type FieldSchema = BaseFieldSchema | z.ZodOptional<BaseFieldSchema>;
@@ -35,6 +41,7 @@ const typeMap: Record<FieldType, () => BaseFieldSchema> = {
   number: () => z.number(),
   stringArray: () => z.array(z.string()),
   numberArray: () => z.array(z.number()),
+  boolean: () => z.boolean(),
 };
 
 export class Scheme {

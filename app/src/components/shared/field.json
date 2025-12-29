@@ -19,12 +19,7 @@
       "type": "enumeration",
       "required": true,
       "default": "string",
-      "enum": [
-        "string",
-        "number",
-        "stringArray",
-        "numberArray"
-      ]
+      "enum": ["boolean", "string", "number", "stringArray", "numberArray"]
     }
   },
   "config": {}
