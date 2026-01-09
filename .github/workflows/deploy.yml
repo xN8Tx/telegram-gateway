@@ -1,0 +1,54 @@
+name: Deploy to Prod Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  prod_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Получаем код
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Настройка SSH для деплоя
+      - name: Setup SSH-ключа
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+
+      # 3. Деплой на сервер через SSH
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.PROD_SSH_USER }}@${{ secrets.PROD_SSH_HOST }} -p ${{ secrets.PROD_SSH_PORT }} << 'EOF'
+            cd ${{ secrets.PROD_DEPLOY_PATH }}
+            git reset --hard origin/main  
+            git pull origin main          
+            docker compose -f ./configs/prod/docker-compose.yaml up --build -d
+          EOF
+
+      # 4. Уведомления о CI/CD
+      - name: Send CI/CD Notification
+        if: always()
+        run: |
+          curl -X POST "${{ secrets.NOTIFY_APP_URL }}" \
+            -H "Content-Type: application/json" \
+            -H "app-token: ${{ secrets.NOTIFY_APP_TOKEN}}" \
+            -d '{
+              "type": ${{ secrets.NOTIFY_TYPE }},
+              "data": {
+                "repo": ${{ github.repository }},
+                "branch": ${{ github.ref_name }},
+                "actor": "${{ github.actor }}",
+                "commit": "${{ github.event.head_commit.message }}",
+                "repo_url": "https://github.com/${{ github.repository }}",
+                "workflow_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                "commit_url": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}",
+                "success": ${{ steps.deploy.outcome == 'success' }},
+                "failure": ${{ steps.deploy.outcome == 'failure' }},
+                "cancelled": ${{ steps.deploy.outcome == 'cancelled' }},
+              }
+            }'
