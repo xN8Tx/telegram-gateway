@@ -28,15 +28,21 @@ jobs:
             git reset --hard origin/main  
             git pull origin main          
             docker compose -f ./configs/prod/docker-compose.yaml up --build -d
+            docker image prune -f
+            docker container prune -f
           EOF
 
-      # 4. Уведомления о CI/CD
+      # 4. Ждем 15 секунд перед тем как отправить уведомление, чтобы страпи успел запустится
+      - name: Wait 15 seconds
+        run: sleep 15
+
+      # 5. Уведомления о CI/CD
       - name: Send CI/CD Notification
         if: always()
         run: |
           curl -X POST "${{ secrets.NOTIFY_APP_URL }}" \
             -H "Content-Type: application/json" \
-            -H "app-token: ${{ secrets.NOTIFY_APP_TOKEN}}" \
+            -H "app-token: ${{ secrets.NOTIFY_APP_TOKEN }}" \
             -d '{
               "type": ${{ secrets.NOTIFY_TYPE }},
               "data": {
