@@ -55,6 +55,6 @@ jobs:
                 "commit_url": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}",
                 "success": ${{ steps.deploy.outcome == 'success' }},
                 "failure": ${{ steps.deploy.outcome == 'failure' }},
-                "cancelled": ${{ steps.deploy.outcome == 'cancelled' }},
+                "cancelled": ${{ steps.deploy.outcome == 'cancelled' }}
               }
             }'
